@@ -1,0 +1,70 @@
+---
+import "../index.less";
+import "./[slug].less";
+import Layout from "../../layouts/Layout.astro";
+import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType, GetStaticPathsResult } from "astro";
+
+// The getStaticPaths() is required for static Astro sites.
+// If using SSR, you will not need this function.
+export const getStaticPaths = async () => {
+  let data = await fetch("http://localhost:3000/api/posts");
+  let posts = (await data.json()) as { docs: any[] };
+
+  return posts.docs.map((post: any) => {
+    return {
+      params: { slug: post.slug },
+      props: {
+        title: post.title,
+        content_html: post.content_html,
+        categories: post.categories,
+        date: post.date,
+        image: post.image,
+      },
+    };
+  });
+};
+
+type Props = {
+  title: string;
+  content_html: string;
+  categories: any[];
+  date: string;
+  image: any;
+};
+
+const { title, content_html, categories, date, image } = Astro.props;
+
+function setApiUrlsAsAbsolute(content: string) {
+  return content.replaceAll("/api/", "http://localhost:3000/api/");
+}
+---
+
+<Layout>
+  <div class="astro-blog-detail">
+    <article class="blog-item flex-col" itemscope="" itemtype="https://schema.org/Article">
+      <div class="blog-item-image">
+        <img src={`http://localhost:3000${image.url}`} alt={title} />
+      </div>
+
+      <div class="blog-item-content flex-col">
+        <h1 set:html={title} />
+
+        <div class="blog-item-details flex-row">
+          <span class="blog-item-date">
+            <i class="fas fa-calendar"></i>
+            <span>{new Date(date).toLocaleDateString("en-US")}</span>
+          </span>
+
+          <span class="blog-item-category">
+            <i class="fas fa-tag"></i>
+            {categories.map((category: any) => <a href={"/categories/" + category.name}>{category.name}</a>)}
+          </span>
+        </div>
+
+        <div class="blog-item-text" itemprop="description">
+          <div set:html={setApiUrlsAsAbsolute(content_html)} />
+        </div>
+      </div>
+    </article>
+  </div>
+</Layout>

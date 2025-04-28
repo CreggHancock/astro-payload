@@ -1,0 +1,31 @@
+---
+import BlogListing from "../../components/BlogListing.astro";
+import Layout from "../../layouts/Layout.astro";
+import "../index.less";
+
+export async function getStaticPaths() {
+  let data = await fetch("http://localhost:3000/api/posts");
+  let posts = (await data.json()) as { docs: any[] };
+
+  return posts.docs
+    .flatMap((post) => post.categories)
+    .filter((value, index, array) => array.indexOf(value) === index)
+    .map((category: any) => {
+      return {
+        params: { slug: category.name },
+        props: {
+          category: category.name,
+          posts: posts.docs.filter((post: any) => post.categories.some((cat: any) => cat.id == category.id)),
+        },
+      };
+    });
+}
+
+const { posts, category } = Astro.props;
+---
+
+<Layout>
+  <h1>Astro + PayloadCMS 🚀</h1>
+  <h2>Blog posts list for {category}:</h2>
+  <BlogListing posts={posts} />
+</Layout>

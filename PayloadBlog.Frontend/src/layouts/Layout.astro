@@ -1,0 +1,28 @@
+---
+import "../layouts/main.less";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Space Blog!</title>
+
+    <script src="https://kit.fontawesome.com/38c73fc2df.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav><a href="/"><i class="fa-solid fa-house"></i></a></nav>
+    <main>
+      <div class="articles">
+        <slot />
+      </div>
+    </main>
+  </body>
+</html>

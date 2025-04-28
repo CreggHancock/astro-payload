@@ -1,0 +1,81 @@
+---
+const { posts } = Astro.props;
+
+function concatTextContent(content: any) {
+  let textContent = "";
+  const children = content.root.children as Array<any>;
+  if (children) {
+    textContent = concatTextFromChildren(children);
+  }
+
+  return textContent;
+}
+
+function concatTextFromChildren(nodes: Array<any>) {
+  let builtText = "";
+  for (const child of nodes) {
+    if (child.text) {
+      builtText += child.text;
+    } else if (child.children) {
+      builtText += concatTextFromChildren(child.children);
+    }
+
+    if (child.type === "paragraph" || child.type === "heading") {
+      builtText += "\n";
+    }
+  }
+
+  return builtText;
+}
+---
+
+<div class="astro-blog-list">
+  {
+    posts.map((post: any) => (
+      <article class="blog-item flex-col" itemscope="" itemtype="https://schema.org/Article">
+        {post.image ? (
+          <div class="blog-item-image">
+            <a href={`posts/${post.slug}`}>
+              <img src={`http://localhost:3000${post.image.url}`} alt={post.image.alt} />
+            </a>
+          </div>
+        ) : (
+          <span />
+        )}
+
+        <div class="blog-item-content flex-col">
+          <div class="blog-item-top">
+            <h3 class="blog-item-title" itemprop="headline">
+              <a href={`posts/${post.slug}`} set:html={post.title} />
+            </h3>
+            <div class="blog-item-details flex-row">
+              <span class="blog-item-date">
+                <i class="fas fa-calendar" />
+                <span>{new Date(post.date).toLocaleDateString("en-US")}</span>
+              </span>
+              <span class="blog-item-category">
+                <>
+                  <i class="fas fa-tag" />
+                  {post.categories.map((category: any) => (
+                    <a href={"/categories/" + category.name}>{category.name}</a>
+                  ))}
+                </>
+              </span>
+            </div>
+          </div>
+          <div class="blog-item-bottom">
+            <div class="blog-item-text" itemprop="description">
+              {concatTextContent(post.content)}
+            </div>
+            <span class="blog-item-link">
+              <a href={`/posts/${post.slug}`} title={post.title}>
+                <span>Read More</span>
+                <i class="fa-solid fa-chevron-right" />
+              </a>
+            </span>
+          </div>
+        </div>
+      </article>
+    ))
+  }
+</div>
