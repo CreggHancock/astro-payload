@@ -21,6 +21,17 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      header : [],
+      beforeDashboard: [],
+      afterDashboard: [],
+      actions: [ '/components/CoreHeader.tsx'],
+      afterNavLinks: ['/components/HelpDesk.tsx'],
+      graphics: {
+        Logo: '/components/Logo',
+        Icon: '/components/Logo'
+      },
+    },
   },
   collections: [Users, Posts, Media, PostCategories],
   editor: lexicalEditor(),

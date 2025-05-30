@@ -1,11 +1,6 @@
-import type { HTMLConvertersFunction } from '@payloadcms/richtext-lexical/html'
 import { CollectionConfig } from 'payload'
 import {
-  BlocksFeature,
-  type DefaultNodeTypes,
-  lexicalEditor,
   lexicalHTMLField,
-  type SerializedBlockNode,
 } from '@payloadcms/richtext-lexical'
 
 export const Posts: CollectionConfig = {
@@ -16,7 +11,6 @@ export const Posts: CollectionConfig = {
   access: {
     read: () => true,
   },
-
   fields: [
     {
       name: 'title',

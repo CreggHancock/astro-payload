@@ -1,7 +1,10 @@
 ---
 import BlogListing from "../components/BlogListing.astro";
+import Button from "../components/Button.astro";
+import { ButtonType } from "../components/Button.astro";
 import Layout from "../layouts/Layout.astro";
 import "./index.less";
+
 const res = await fetch("http://localhost:3000/api/posts");
 const posts: any = await res.json();
 ---
@@ -9,5 +12,6 @@ const posts: any = await res.json();
 <Layout>
   <h1>Astro + PayloadCMS 🚀</h1>
   <h2>Blog posts list:</h2>
+  <Button buttonType={ButtonType.Primary} />
   <BlogListing posts={posts.docs} />
 </Layout>

@@ -1,0 +1,35 @@
+---
+const { buttonType } = Astro.props;
+
+export enum ButtonType {
+  Primary = "primary",
+  Secondary = "secondary",
+  Tertiary = "tertiary",
+}
+---
+
+<button class={"button " + buttonType}>Click Me</button>
+<style lang="less">
+  button {
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+  button.primary {
+    background-color: var(--kofc-red, #a0372a);
+    color: var(--theme-white, #fff);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  button.secondary {
+    background-color: var(--kofc-red, #27948b);
+    color: var(--theme-white, #fff);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  button.tertiary {
+    background-color: var(--kofc-red, #a02e91);
+    color: var(--theme-white, #fff);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+</style>

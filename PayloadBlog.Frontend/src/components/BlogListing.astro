@@ -31,7 +31,7 @@ function concatTextFromChildren(nodes: Array<any>) {
 
 <div class="astro-blog-list">
   {
-    posts.map((post: any) => (
+    posts?.map((post: any) => (
       <article class="blog-item flex-col" itemscope="" itemtype="https://schema.org/Article">
         {post.image ? (
           <div class="blog-item-image">
@@ -76,6 +76,6 @@ function concatTextFromChildren(nodes: Array<any>) {
           </div>
         </div>
       </article>
-    ))
+    )) ?? <div>No posts found.</div>
   }
 </div>
