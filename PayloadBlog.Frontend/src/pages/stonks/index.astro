@@ -1,0 +1,22 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Stonks from "../../elm/Stonks.elm";
+---
+
+<Layout>
+  <h2>Stocks:</h2>
+  <Stonks
+    client:load
+    dataPoints={[
+      { x: 0, y: 0, z: 0 },
+      { x: 1, y: 1, z: 1 },
+      { x: 2, y: 3, z: 3 },
+      { x: 3, y: 6, z: 6 },
+    ]}
+  />
+</Layout>
+<style is:global>
+  .elm-charts__container {
+    max-width: 30%;
+  }
+</style>
