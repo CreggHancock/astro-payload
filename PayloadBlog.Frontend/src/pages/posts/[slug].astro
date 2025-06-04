@@ -18,6 +18,7 @@ export const getStaticPaths = async () => {
         categories: post.categories,
         date: post.date,
         image: post.image,
+        slug: post.slug,
       },
     };
   });
@@ -29,9 +30,10 @@ type Props = {
   categories: any[];
   date: string;
   image: any;
+  slug: string;
 };
 
-const { title, content_html, categories, date, image } = Astro.props;
+const { title, content_html, categories, date, image, slug } = Astro.props;
 
 function setApiUrlsAsAbsolute(content: string) {
   return content.replaceAll("/api/", "http://localhost:3000/api/");
@@ -40,7 +42,7 @@ function setApiUrlsAsAbsolute(content: string) {
 
 <Layout>
   <div class="astro-blog-detail">
-    <article class="blog-item flex-col" itemscope="" itemtype="https://schema.org/Article">
+    <article class="blog-item flex-col" itemscope="" itemtype="https://schema.org/Article" transition:name={slug}>
       <div class="blog-item-image">
         <img src={`http://localhost:3000${image.url}`} alt={title} />
       </div>

@@ -32,10 +32,16 @@ function concatTextFromChildren(nodes: Array<any>) {
 <div class="astro-blog-list">
   {
     posts?.map((post: any) => (
-      <article class="blog-item flex-col" itemscope="" itemtype="https://schema.org/Article">
+      <article
+        class="blog-item flex-col"
+        itemscope=""
+        itemtype="https://schema.org/Article"
+        transition:name={post.slug}
+        transition:animate="slide"
+      >
         {post.image ? (
           <div class="blog-item-image">
-            <a href={`posts/${post.slug}`}>
+            <a href={`/posts/${post.slug}`}>
               <img src={`http://localhost:3000${post.image.url}`} alt={post.image.alt} />
             </a>
           </div>
@@ -46,7 +52,7 @@ function concatTextFromChildren(nodes: Array<any>) {
         <div class="blog-item-content flex-col">
           <div class="blog-item-top">
             <h3 class="blog-item-title" itemprop="headline">
-              <a href={`posts/${post.slug}`} set:html={post.title} />
+              <a href={`/posts/${post.slug}`} set:html={post.title} />
             </h3>
             <div class="blog-item-details flex-row">
               <span class="blog-item-date">
@@ -54,12 +60,10 @@ function concatTextFromChildren(nodes: Array<any>) {
                 <span>{new Date(post.date).toLocaleDateString("en-US")}</span>
               </span>
               <span class="blog-item-category">
-                <>
-                  <i class="fas fa-tag" />
-                  {post.categories.map((category: any) => (
-                    <a href={"/categories/" + category.name}>{category.name}</a>
-                  ))}
-                </>
+                <i class="fas fa-tag" />
+                {post.categories.map((category: any) => (
+                  <a href={"/categories/" + category.name}>{category.name}</a>
+                ))}
               </span>
             </div>
           </div>
