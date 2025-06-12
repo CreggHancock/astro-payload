@@ -12,14 +12,3 @@ export const GET = async () => {
 
   return Response.json(data)
 }
-
-
-export const GETPOSTS = async () => {
-  const payload = await getPayload({
-    config: configPromise,
-  })
-
-  const data = await payload.find({
-    collection: 'posts',
-  });
-}
