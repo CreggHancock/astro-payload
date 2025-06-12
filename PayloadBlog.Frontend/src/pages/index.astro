@@ -9,5 +9,5 @@ const posts: any = await res.json();
 
 <Layout>
   <h1>Astro + PayloadCMS 🚀</h1>
-  <BlogListing posts={posts.docs} />
+  <BlogListing posts={posts.docs} postRoute="posts/" />
 </Layout>

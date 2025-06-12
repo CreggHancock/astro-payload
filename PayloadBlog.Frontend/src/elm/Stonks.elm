@@ -69,7 +69,7 @@ view model =
             ]
             model.dataPoints
         , C.each model.hovering <|
-            \p item ->
+            \_ item ->
                 [ C.tooltip item [] [] [ H.text "$", CI.getY item |> String.fromFloat |> H.text ] ]
         ]
 

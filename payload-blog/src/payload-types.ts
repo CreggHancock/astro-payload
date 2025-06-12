@@ -71,6 +71,7 @@ export interface Config {
     posts: Post;
     media: Media;
     'post-categories': PostCategory;
+    'private-posts': PrivatePost;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +82,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'post-categories': PostCategoriesSelect<false> | PostCategoriesSelect<true>;
+    'private-posts': PrivatePostsSelect<false> | PrivatePostsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -195,6 +197,36 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "private-posts".
+ */
+export interface PrivatePost {
+  id: string;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug: string;
+  categories: (string | PostCategory)[];
+  date: string;
+  image?: (string | null) | Media;
+  content_html?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -215,6 +247,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'post-categories';
         value: string | PostCategory;
+      } | null)
+    | ({
+        relationTo: 'private-posts';
+        value: string | PrivatePost;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -312,6 +348,21 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface PostCategoriesSelect<T extends boolean = true> {
   name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "private-posts_select".
+ */
+export interface PrivatePostsSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  slug?: T;
+  categories?: T;
+  date?: T;
+  image?: T;
+  content_html?: T;
   updatedAt?: T;
   createdAt?: T;
 }

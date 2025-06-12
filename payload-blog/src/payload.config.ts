@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Posts } from './collections/Posts'
+import { PrivatePosts } from './collections/PrivatePosts';
 import { Media } from './collections/Media'
 import { PostCategories } from './collections/PostCategories'
 
@@ -33,7 +34,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Posts, Media, PostCategories],
+  collections: [Users, Posts, Media, PostCategories, PrivatePosts ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -47,4 +48,5 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder-
   ],
+  cors: ["http://localhost:4322"]
 })

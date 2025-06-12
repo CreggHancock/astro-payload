@@ -3,13 +3,15 @@ import {
   lexicalHTMLField,
 } from '@payloadcms/richtext-lexical'
 
-export const Posts: CollectionConfig = {
-  slug: 'posts',
+export const PrivatePosts: CollectionConfig = {
+  slug: 'private-posts',
   admin: {
     useAsTitle: 'title',
   },
   access: {
-    read: () => true
+    read: ({ req: { user },  }) => {
+        return Boolean(user)
+    }
   },
   fields: [
     {
